@@ -1,0 +1,307 @@
+<!-- VoyageAI RAG Memory Settings Panel -->
+<div class="voyageai-memory-settings">
+    <div class="inline-drawer">
+        <div class="inline-drawer-toggle inline-drawer-header">
+            <b>🧠 VoyageAI RAG Memory</b>
+            <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+        </div>
+        <div class="inline-drawer-content">
+            <!-- Enable/Disable Toggle -->
+            <div class="voyageai-memory_block flex-container flexFlowColumn">
+                <div class="flex-container alignItemsCenter">
+                    <input id="voyageai_memory_enabled" type="checkbox" />
+                    <label for="voyageai_memory_enabled"><strong>Enable Extension</strong></label>
+                </div>
+                <small class="voyageai-hint">Enable or disable the RAG memory system</small>
+            </div>
+
+            <hr class="sysHR" />
+
+            <!-- Summarization API Settings -->
+            <div class="voyageai-memory_block">
+                <h4 class="voyageai-section-title">📝 Summarization API</h4>
+                
+                <div class="flex-container flexFlowColumn marginBot5">
+                    <label for="voyageai_summarization_url">API URL</label>
+                    <input id="voyageai_summarization_url" type="text" class="text_pole" 
+                           placeholder="https://api.openai.com/v1" />
+                    <small class="voyageai-hint">OpenAI-compatible API endpoint</small>
+                </div>
+
+                <div class="flex-container flexFlowColumn marginBot5">
+                    <label for="voyageai_summarization_key">API Key</label>
+                    <input id="voyageai_summarization_key" type="password" class="text_pole" 
+                           placeholder="sk-..." />
+                </div>
+
+                <div class="flex-container flexFlowColumn marginBot5">
+                    <label for="voyageai_summarization_model">Model</label>
+                    <input id="voyageai_summarization_model" type="text" class="text_pole"
+                           placeholder="gemini-2.0-flash-exp" />
+                    <small class="voyageai-hint">Model name for summarization (예: gemini-2.0-flash-exp, gpt-4o-mini)</small>
+                </div>
+
+                <div class="flex-container alignItemsCenter marginBot5">
+                    <input id="voyageai_test_summarization" class="menu_button" type="button" 
+                           value="🔍 Test Connection" />
+                    <span id="voyageai_summarization_status" class="voyageai-status"></span>
+                </div>
+            </div>
+
+            <hr class="sysHR" />
+
+            <!-- VoyageAI Settings -->
+            <div class="voyageai-memory_block">
+                <h4 class="voyageai-section-title">🚀 VoyageAI Embeddings</h4>
+
+                <div class="flex-container flexFlowColumn marginBot5">
+                    <label for="voyageai_api_key">VoyageAI API Key</label>
+                    <input id="voyageai_api_key" type="password" class="text_pole" 
+                           placeholder="pa-..." />
+                </div>
+
+                <div class="flex-container flexFlowColumn marginBot5">
+                    <label for="voyageai_model">Embedding Model</label>
+                    <select id="voyageai_model" class="text_pole">
+                        <option value="voyage-4-large">Voyage 4 Large (1024 dims)</option>
+                        <option value="voyage-3-large">Voyage 3 Large (1024 dims)</option>
+                        <option value="voyage-3">Voyage 3 (1024 dims)</option>
+                        <option value="voyage-3-lite">Voyage 3 Lite (512 dims)</option>
+                        <option value="voyage-code-3">Voyage Code 3 (1024 dims)</option>
+                    </select>
+                </div>
+
+                <div class="flex-container alignItemsCenter marginBot5">
+                    <input id="voyageai_test_embedding" class="menu_button" type="button" 
+                           value="🔍 Test Connection" />
+                    <span id="voyageai_embedding_status" class="voyageai-status"></span>
+                </div>
+            </div>
+
+            <hr class="sysHR" />
+
+            <!-- Behavior Settings -->
+            <div class="voyageai-memory_block">
+                <h4 class="voyageai-section-title">⚙️ Behavior</h4>
+
+                <div class="flex-container alignItemsCenter marginBot5">
+                    <input id="voyageai_auto_store" type="checkbox" />
+                    <label for="voyageai_auto_store">Auto-store new messages</label>
+                </div>
+                <small class="voyageai-hint marginBot5">Automatically process and store new messages</small>
+
+                <div class="flex-container alignItemsCenter marginBot5">
+                    <input id="voyageai_auto_retrieve" type="checkbox" />
+                    <label for="voyageai_auto_retrieve">Auto-retrieve memories</label>
+                </div>
+                <small class="voyageai-hint marginBot5">Automatically inject relevant memories into context</small>
+
+                <div class="flex-container flexFlowColumn marginBot5">
+                    <label for="voyageai_top_k">Top K Memories</label>
+                    <input id="voyageai_top_k" type="number" class="text_pole" 
+                           min="1" max="20" value="5" />
+                    <small class="voyageai-hint">Number of memories to retrieve (1-20)</small>
+                </div>
+
+                <div class="flex-container flexFlowColumn marginBot5">
+                    <label for="voyageai_similarity_threshold">Similarity Threshold</label>
+                    <input id="voyageai_similarity_threshold" type="number" class="text_pole" 
+                           min="0" max="1" step="0.05" value="0.7" />
+                    <small class="voyageai-hint">Minimum similarity score (0.0 - 1.0)</small>
+                </div>
+
+                <div class="flex-container flexFlowColumn marginBot5">
+                    <label for="voyageai_injection_position">Memory Injection Position</label>
+                    <select id="voyageai_injection_position" class="text_pole">
+                        <option value="afterScenario">After Scenario (시나리오 뒤)</option>
+                        <option value="beforeScenario">Before Scenario (시나리오 앞)</option>
+                        <option value="inAuthorsNote">In Author's Note (작가 노트 내)</option>
+                        <option value="afterCharacter">After Character Description (캐릭터 설명 뒤)</option>
+                        <option value="atDepth">At Depth (깊이 지정)</option>
+                    </select>
+                </div>
+
+                <div class="flex-container flexFlowColumn marginBot5">
+                    <label for="voyageai_injection_depth">Injection Depth / 주입 깊이</label>
+                    <input id="voyageai_injection_depth" type="number" class="text_pole"
+                           min="0" max="100" value="0" />
+                    <small class="voyageai-hint">메시지 깊이 N에 기억 주입 (0=최신 메시지 위) / Inject memories at message depth N</small>
+                </div>
+
+                <hr class="sysHR" />
+
+                <h5 class="marginBot5">📋 Message Summarization Filter / 메시지 요약 필터</h5>
+
+                <div class="flex-container alignItemsCenter marginBot5">
+                    <input id="voyageai_summarize_bot" type="checkbox" checked />
+                    <label for="voyageai_summarize_bot">Summarize Bot Messages / 봇 메시지 요약</label>
+                </div>
+
+                <div class="flex-container alignItemsCenter marginBot5">
+                    <input id="voyageai_summarize_user" type="checkbox" checked />
+                    <label for="voyageai_summarize_user">Summarize User Messages / 유저 메시지 요약</label>
+                </div>
+                <small class="voyageai-hint marginBot5">어떤 메시지를 요약하고 저장할지 선택 / Select which messages to summarize and store</small>
+
+                <hr class="sysHR" />
+
+                <div class="flex-container flexFlowColumn marginBot5">
+                    <label for="voyageai_language">Summary Language / 요약 언어</label>
+                    <select id="voyageai_language" class="text_pole">
+                        <option value="ko">한국어 (Korean)</option>
+                        <option value="en">English</option>
+                    </select>
+                    <small class="voyageai-hint">기억 요약에 사용할 언어 / Language for memory summaries</small>
+                </div>
+            </div>
+
+            <hr class="sysHR" />
+
+            <!-- Actions -->
+            <div class="voyageai-memory_block">
+                <h4 class="voyageai-section-title">🔧 Actions</h4>
+                
+                <div class="flex-container marginBot5">
+                    <input id="voyageai_store_current" class="menu_button" type="button" 
+                           value="📥 Store Current Chat" title="Process and store all messages from current chat" />
+                    <input id="voyageai_clear_memories" class="menu_button menu_button_danger" type="button" 
+                           value="🗑️ Clear Memories" title="Clear all memories for current character" />
+                </div>
+
+                <div class="flex-container marginBot5">
+                    <input id="voyageai_export_memories" class="menu_button" type="button" 
+                           value="📤 Export" title="Export memories to JSON file" />
+                    <input id="voyageai_import_memories" class="menu_button" type="button" 
+                           value="📥 Import" title="Import memories from JSON file" />
+                    <input type="file" id="voyageai_import_file" accept=".json" style="display: none;" />
+                </div>
+
+                <div class="flex-container marginBot5">
+                    <input id="voyageai_view_memories" class="menu_button" type="button" 
+                           value="👁️ View Memories" title="View stored memories for current character" />
+                </div>
+            </div>
+
+            <hr class="sysHR" />
+
+            <!-- Status Display -->
+            <div class="voyageai-memory_block">
+                <div class="voyageai-stats-container">
+                    <div class="voyageai-stat">
+                        <span class="voyageai-stat-label">Memories:</span>
+                        <span id="voyageai_memory_count" class="voyageai-stat-value">0</span>
+                    </div>
+                    <div class="voyageai-stat">
+                        <span class="voyageai-stat-label">Last Updated:</span>
+                        <span id="voyageai_last_updated" class="voyageai-stat-value">Never</span>
+                    </div>
+                    <div class="voyageai-stat">
+                        <span class="voyageai-stat-label">Status:</span>
+                        <span id="voyageai_status" class="voyageai-stat-value voyageai-status-ready">Ready</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="sysHR" />
+
+            <!-- Advanced Settings (Collapsible) -->
+            <div class="voyageai-memory_block">
+                <div class="inline-drawer">
+                    <div class="inline-drawer-toggle inline-drawer-header">
+                        <span>Advanced Settings / 고급 설정</span>
+                        <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+                    </div>
+                    <div class="inline-drawer-content">
+                        <div class="flex-container flexFlowColumn marginBot5">
+                            <label for="voyageai_word_limit">Summary Word Limit / 요약 단어 제한</label>
+                            <input id="voyageai_word_limit" type="number" class="text_pole"
+                                   min="20" max="200" value="50" />
+                            <small class="voyageai-hint">요약의 최대 단어 수 (20-200) / Maximum words per summary</small>
+                        </div>
+
+                        <div class="flex-container alignItemsCenter marginBot5">
+                            <input id="voyageai_include_history" type="checkbox" />
+                            <label for="voyageai_include_history">Include Summary History / 요약 히스토리 포함</label>
+                        </div>
+                        <small class="voyageai-hint marginBot5">이전 요약을 컨텍스트로 포함 / Include previous summaries as context</small>
+
+                        <div class="flex-container flexFlowColumn marginBot5">
+                            <label for="voyageai_history_count">Summary History Count / 요약 히스토리 개수</label>
+                            <input id="voyageai_history_count" type="number" class="text_pole"
+                                   min="1" max="10" value="3" />
+                            <small class="voyageai-hint">컨텍스트에 포함할 이전 요약 수 (1-10) / Number of previous summaries to include</small>
+                        </div>
+
+                        <hr class="sysHR" />
+
+                        <h5 class="marginBot5">📜 Raw Message History / 원본 메시지 히스토리</h5>
+
+                        <div class="flex-container alignItemsCenter marginBot5">
+                            <input id="voyageai_include_raw_history" type="checkbox" />
+                            <label for="voyageai_include_raw_history">Include Raw Messages / 원본 메시지 포함</label>
+                        </div>
+                        <small class="voyageai-hint marginBot5">이전 원본 채팅 메시지를 컨텍스트로 포함 / Include previous raw chat messages as context</small>
+
+                        <div class="flex-container flexFlowColumn marginBot5">
+                            <label for="voyageai_raw_history_count">Message Count / 메시지 개수</label>
+                            <input id="voyageai_raw_history_count" type="number" class="text_pole"
+                                   min="1" max="20" value="5" />
+                            <small class="voyageai-hint">포함할 이전 메시지 수 (1-20) / Number of previous messages to include</small>
+                        </div>
+
+                        <div class="flex-container alignItemsCenter marginBot5">
+                            <input id="voyageai_raw_include_bot" type="checkbox" checked />
+                            <label for="voyageai_raw_include_bot">Bot Messages / 봇 메시지</label>
+                        </div>
+
+                        <div class="flex-container alignItemsCenter marginBot5">
+                            <input id="voyageai_raw_include_user" type="checkbox" checked />
+                            <label for="voyageai_raw_include_user">User Messages / 유저 메시지</label>
+                        </div>
+                        <small class="voyageai-hint marginBot5">히스토리에 포함할 메시지 유형 선택 / Select which message types to include</small>
+
+                        <hr class="sysHR" />
+
+                        <div class="flex-container flexFlowColumn marginBot5">
+                            <label for="voyageai_custom_prompt">Custom Summarization Prompt / 커스텀 요약 프롬프트</label>
+                            <textarea id="voyageai_custom_prompt" class="text_pole textarea_compact"
+                                      rows="4" placeholder="비워두면 선택한 언어의 기본 프롬프트가 사용됩니다..."></textarea>
+                            <small class="voyageai-hint">기억 요약 방식 커스터마이즈 / Customize how messages are summarized</small>
+                        </div>
+
+                        <div class="flex-container flexFlowColumn marginBot5">
+                            <label for="voyageai_memory_template">Memory Injection Template / 기억 주입 템플릿</label>
+                            <textarea id="voyageai_memory_template" class="text_pole textarea_compact"
+                                      rows="3" placeholder="[과거 대화에서 관련된 기억들: {{memories}}]"></textarea>
+                            <small class="voyageai-hint">{{memories}} 플레이스홀더 사용 / Template for injecting memories</small>
+                        </div>
+
+                        <div class="flex-container alignItemsCenter marginBot5">
+                            <input id="voyageai_debug_mode" type="checkbox" />
+                            <label for="voyageai_debug_mode">Debug Mode / 디버그 모드</label>
+                        </div>
+                        <small class="voyageai-hint">콘솔에 상세 로그 출력 / Log detailed information to console</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Memory Viewer Modal -->
+<div id="voyageai_memory_viewer" class="voyageai-modal" style="display: none;">
+    <div class="voyageai-modal-content">
+        <div class="voyageai-modal-header">
+            <h3>🧠 Stored Memories</h3>
+            <span id="voyageai_close_viewer" class="voyageai-modal-close">&times;</span>
+        </div>
+        <div class="voyageai-modal-body">
+            <div id="voyageai_memories_list" class="voyageai-memories-list">
+                <!-- Memories will be dynamically inserted here -->
+            </div>
+        </div>
+        <div class="voyageai-modal-footer">
+            <input id="voyageai_close_viewer_btn" class="menu_button" type="button" value="Close" />
+        </div>
+    </div>
+</div>
